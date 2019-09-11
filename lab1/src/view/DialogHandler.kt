@@ -2,27 +2,27 @@ package view
 
 import controller.Producer
 import model.production.ElType
+import model.queue.CoherentMemoryQueue
 import model.queue.LinkedMemoryQueue
 import java.lang.NumberFormatException
 import java.util.*
 import kotlin.system.exitProcess
 
 class DialogHandler {
-    private val productsQueue = LinkedMemoryQueue<ElType>()
+    private val productsQueue = CoherentMemoryQueue<ElType>()
     private val producer = Producer(productsQueue)
     private var shouldRun = true
     private val scanner = Scanner(System.`in`)
 
     init {
-        val products = listOf(
+        listOf(
             ElType("Car1", 1),
             ElType("Car2", 2),
             ElType("Car3", 3),
             ElType("Car4", 2),
             ElType("Car5", 4),
             ElType("Car6", 1)
-        )
-        producer.addProducts(products)
+        ).forEach { producer.addProduct(it) }
     }
 
     fun start() {
@@ -63,7 +63,7 @@ class DialogHandler {
 
         var productionTime = -1
         while (productionTime <= 0) {
-            print("\nВведите время производства: ")
+            print("Введите время производства: ")
             val userInput = scanner.next()
             productionTime = try {
                 userInput.toInt()
@@ -73,7 +73,11 @@ class DialogHandler {
         }
 
         val newElement = ElType(code, productionTime)
-        producer.addProducts(listOf(newElement))
+        val isAddedSuccessfully = producer.addProduct(newElement)
+
+        if (!isAddedSuccessfully) {
+            println("Элемент не добавлен т.к. чередь переполнена!")
+        }
     }
 
     private fun makeTick() {
