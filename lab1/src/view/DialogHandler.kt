@@ -2,14 +2,12 @@ package view
 
 import controller.Producer
 import model.production.ElType
-import model.queue.CoherentMemoryQueue
 import model.queue.LinkedMemoryQueue
-import java.lang.NumberFormatException
 import java.util.*
 import kotlin.system.exitProcess
 
 class DialogHandler {
-    private val productsQueue = CoherentMemoryQueue<ElType>()
+    private val productsQueue = LinkedMemoryQueue<ElType>()
     private val producer = Producer(productsQueue)
     private var shouldRun = true
     private val scanner = Scanner(System.`in`)

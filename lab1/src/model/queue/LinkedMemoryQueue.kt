@@ -2,6 +2,7 @@ package model.queue
 
 class LinkedMemoryQueue<T> : QueueInterface<T> {
     private var firstElement: LinkedListElement<T>? = null
+    private var lastElement: LinkedListElement<T>? = null
 
     override fun peek(): T? {
         return firstElement?.data
@@ -27,13 +28,10 @@ class LinkedMemoryQueue<T> : QueueInterface<T> {
     override fun add(element: T): Boolean {
         if (isEmpty()) {
             firstElement = LinkedListElement(element)
+            lastElement = firstElement
         } else {
-            var lastElement = firstElement
-            while (lastElement?.next != null) {
-                lastElement = lastElement.next
-            }
-
             lastElement?.next = LinkedListElement(element)
+            lastElement = lastElement!!.next
         }
 
         return true

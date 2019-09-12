@@ -1,12 +1,11 @@
 package controller
 
 import model.production.ElType
-import model.queue.CoherentMemoryQueue
 import model.queue.LinkedMemoryQueue
 import model.queue.QueueInterface
 
 class Producer(queue: QueueInterface<ElType>? = null) {
-    private val queue: QueueInterface<ElType> = queue ?: CoherentMemoryQueue()
+    private val queue: QueueInterface<ElType> = queue ?: LinkedMemoryQueue()
     var currentProduct: ElType? = null
         get() = queue.peek()
         private set
@@ -33,6 +32,11 @@ class Producer(queue: QueueInterface<ElType>? = null) {
         }
     }
 
+    /**
+     * Adds product to queue
+     *
+     * @return 'true' if product added, 'false' - otherwise
+     */
     fun addProduct(product: ElType): Boolean {
         // if there were no products in queue, set production time according to new product
         if (queue.isEmpty()) {
