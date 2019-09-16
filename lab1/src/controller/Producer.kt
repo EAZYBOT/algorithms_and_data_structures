@@ -1,11 +1,12 @@
 package controller
 
 import model.production.ElType
+import model.queue.CoherentMemoryQueue
 import model.queue.LinkedMemoryQueue
 import model.queue.QueueInterface
 
 class Producer(queue: QueueInterface<ElType>? = null) {
-    private val queue: QueueInterface<ElType> = queue ?: LinkedMemoryQueue()
+    private val queue: QueueInterface<ElType> = queue ?: CoherentMemoryQueue()
     var currentProduct: ElType? = null
         get() = queue.peek()
         private set
@@ -61,8 +62,7 @@ class Producer(queue: QueueInterface<ElType>? = null) {
     }
 
     private fun getNextProduct() {
-        queue.removeHead()
-        currentProduct = queue.peek()
+        currentProduct = queue.poll()
         currentProductRemainingTime = currentProduct?.productionTime ?: 0
     }
 
