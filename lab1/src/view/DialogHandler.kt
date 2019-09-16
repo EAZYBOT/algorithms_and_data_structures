@@ -74,7 +74,7 @@ class DialogHandler {
         val isAddedSuccessfully = producer.addProduct(newElement)
 
         if (!isAddedSuccessfully) {
-            println("Элемент не добавлен т.к. чередь переполнена!")
+            println("Элемент не добавлен т.к. очередь переполнена!")
         }
     }
 
