@@ -1,6 +1,0 @@
-package model.enrollee
-
-enum class EnrolleeCriteria {
-    HAS_MAX_ENTRY_EXAM_SCORE, HAS_SCHOOL_CERTIFICATE_WITH_HONOURS,
-    LIVES_FAR_FROM_UNIVERSITY, NEEDS_HOSTEL
-}
